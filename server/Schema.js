@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
 
 const adminSchema = new mongoose.Schema({
     categories: {type: Array},
-    promotedRestaurants: []
+    promotedRestaurants: [String]
+    
 });
 
 const restaurantSchema = new mongoose.Schema({

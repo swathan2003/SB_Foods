@@ -3,9 +3,10 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
+import dotenv from "dotenv";
 import {Admin, Cart, FoodItem, Orders, Restaurant, User } from './Schema.js'
 
-
+dotenv.config({path:"./.env"});
 const app = express();
 
 app.use(express.json());
@@ -15,7 +16,7 @@ app.use(cors());
 
 const PORT = 6001;
 
-mongoose.connect('mongodb://localhost:27017/foodDelivery',{
+mongoose.connect('mongodb+srv://phno8925828525:Swathi@foodorderingapp.zhrzt.mongodb.net/SBFoods?retryWrites=true&w=majority&appName=FoodOrderingApp',{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
@@ -216,7 +217,7 @@ mongoose.connect('mongodb://localhost:27017/foodDelivery',{
 
     // Fetch categories
 
-    app.get('/fetch-categories', async(req, res)=>{
+     app.get('/fetch-categories', async(req, res)=>{
         try{
             const data = await Admin.find();
             if(data.length===0){
@@ -466,6 +467,16 @@ mongoose.connect('mongodb://localhost:27017/foodDelivery',{
 
 
     app.listen(PORT, ()=>{
-        console.log('running @ 6001');
+        console.log('App server is running on port 6001');
     })
 }).catch((e)=> console.log(`Error in db connection ${e}`));
+
+    const MongoUri = process.env.DRIVER_LINK;
+    const connectToMongo = async () => {
+        try {
+            await mongoose.connect(MongoUri);
+            console.log("Connected to your MongoDB database successfully");
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
